@@ -7,13 +7,17 @@ export class DataBase{
     private database: string = "prefeitura";
     private password: string = "1234";
     private  port: number =  5432;
-    public db: Client | null = null;
+    public db: Pool | null = null;
 
     constructor(){
         if(!this.db){
-            this.db = new Client(
-                coString
-            );
+            this.db = new Pool({
+                user: this.user,
+                host: this.host,
+                database: this.database,
+                password: this.password,
+                port: this.port,
+            });
         }
         if(this.db){
             this.dbConnect();
@@ -69,7 +73,7 @@ export class DataBase{
         return {accepted: false, data: "Banco de dados desconectado"};
     }
    
-    public dataBase(): Client | null {
+    public dataBase(): Pool | null {
         return this.db;
     }
     
